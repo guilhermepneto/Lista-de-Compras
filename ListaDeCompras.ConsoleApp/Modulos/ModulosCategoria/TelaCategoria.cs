@@ -4,9 +4,9 @@ namespace ListaDeCompras.ConsoleApp.Modulos.ModulosCategoria;
 
 public class TelaCategoria : TelaBase, ITelaOpcoes
 {
-    private readonly RepositorioBase repositorioCategoria;
+    private readonly RepositorioCategoria repositorioCategoria;
 
-    public TelaCategoria(RepositorioBase repositorioCategoria) : base("Categoria", repositorioCategoria)
+    public TelaCategoria(RepositorioCategoria repositorioCategoria) : base("Categoria", repositorioCategoria)
     {
         this.repositorioCategoria = repositorioCategoria;
     }
@@ -25,7 +25,7 @@ public class TelaCategoria : TelaBase, ITelaOpcoes
             "Id", "Nome", "Cor"
         );
 
-        EntidadeBase[] registros = RepositorioCategoria.SelecionarTodos();
+        EntidadeBase[] registros = repositorioCategoria.SelecionarTodos();
 
         for (int i = 0; i < registros.Length; i++)
         {
@@ -46,9 +46,7 @@ public class TelaCategoria : TelaBase, ITelaOpcoes
             Console.WriteLine("Pressione ENTER para prosseguir.");
             Console.ReadLine();
         }
-
     }
-
     protected override EntidadeBase ObterDadosCadastrais()
     {
         Console.Write("Informe o nome da categoria: ");
@@ -92,5 +90,31 @@ public class TelaCategoria : TelaBase, ITelaOpcoes
         }
 
         return new Categoria(nome!, cor);
+    }
+
+    protected override bool ExisteRegistroComInformacoesExlusivas(EntidadeBase entidade, int? idIgnorado)
+    {
+        Categoria novaCategoria = (Categoria)entidade;
+
+        EntidadeBase[] categorias = repositorioCategoria.SelecionarTodos();
+
+        for (int i = 0; i < categorias.Length; i++)
+        {
+            Categoria c = (Categoria)categorias[i];
+
+            if (c == null)
+                continue;
+
+            if (idIgnorado != c.Id && novaCategoria.Nome == c.Nome)
+            {
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine($"Já existe uma categoria com o nome \"{c.Nome}\"");
+                Console.WriteLine("---------------------------------");
+
+                return true;
+            }
+        }
+
+        return base.ExisteRegistroComInformacoesExlusivas(entidade);
     }
 }
