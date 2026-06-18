@@ -99,6 +99,13 @@ public abstract class TelaBase
         Console.Write("Digite o ID do registro que deseja excluir: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
+        if (ExistemDependenciasAtivasDoRegistro(idSelecionado))
+        {
+            Console.WriteLine("Pressione ENTER para prosseguir.");
+            Console.ReadLine();
+            return;
+        }
+
         repositorio.Excluir(idSelecionado);
 
         Console.WriteLine("---------------------------------");
@@ -110,8 +117,12 @@ public abstract class TelaBase
     public abstract void VisualizarTodos(bool deveExibirCabecalho);
     protected abstract EntidadeBase ObterDadosCadastrais();
 
-
     protected virtual bool ExisteRegistroComInformacoesExlusivas(EntidadeBase entidade, int? idIgnorado = null)
+    {
+        return false;
+    }
+
+    protected virtual bool ExistemDependenciasAtivasDoRegistro(int idRegistro)
     {
         return false;
     }
