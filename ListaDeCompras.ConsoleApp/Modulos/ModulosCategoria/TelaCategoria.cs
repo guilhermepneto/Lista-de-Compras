@@ -92,7 +92,7 @@ public class TelaCategoria : TelaBase, ITelaOpcoes
         return new Categoria(nome!, cor);
     }
 
-    protected override bool ExisteRegistroComInformacoesExlusivas(EntidadeBase entidade, int? idIgnorado)
+    protected override bool ExisteRegistroComInformacoesExclusivas(EntidadeBase entidade, int? idIgnorado)
     {
         Categoria novaCategoria = (Categoria)entidade;
 
@@ -115,7 +115,7 @@ public class TelaCategoria : TelaBase, ITelaOpcoes
             }
         }
 
-        return base.ExisteRegistroComInformacoesExlusivas(entidade);
+        return base.ExisteRegistroComInformacoesExclusivas(entidade);
     }
 
     protected override bool ExistemDependenciasAtivasDoRegistro(int idRegistro)

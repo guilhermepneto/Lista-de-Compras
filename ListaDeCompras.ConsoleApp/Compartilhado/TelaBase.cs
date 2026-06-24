@@ -37,7 +37,7 @@ public abstract class TelaBase
 
         EntidadeBase novaEntidade = ObterDadosCadastrais();
 
-        if (ExisteRegistroComInformacoesExlusivas(novaEntidade))
+        if (ExisteRegistroComInformacoesExclusivas(novaEntidade))
         {
             Console.WriteLine("---------------------------");
             Console.WriteLine("Pressione ENTER para prosseguir.");
@@ -70,7 +70,7 @@ public abstract class TelaBase
 
         EntidadeBase entidadeAtualizada = ObterDadosCadastrais();
 
-        if (ExisteRegistroComInformacoesExlusivas(entidadeAtualizada, idSelecionado))
+        if (ExisteRegistroComInformacoesExclusivas(entidadeAtualizada, idSelecionado))
         {
             Console.WriteLine("---------------------------");
             Console.WriteLine("Pressione ENTER para prosseguir.");
@@ -117,7 +117,7 @@ public abstract class TelaBase
     public abstract void VisualizarTodos(bool deveExibirCabecalho);
     protected abstract EntidadeBase ObterDadosCadastrais();
 
-    protected virtual bool ExisteRegistroComInformacoesExlusivas(EntidadeBase entidade, int? idIgnorado = null)
+    protected virtual bool ExisteRegistroComInformacoesExclusivas(EntidadeBase entidade, int? idIgnorado = null)
     {
         return false;
     }
