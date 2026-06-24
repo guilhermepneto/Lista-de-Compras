@@ -35,7 +35,7 @@ public class TelaProduto : TelaBase, ITelaOpcoes
 
         foreach (EntidadeBase registro in registros)
         {
-            Produto p = (Produto)registro;
+            Produtos p = (Produtos)registro;
 
             if (p == null)
                 continue;
@@ -48,6 +48,8 @@ public class TelaProduto : TelaBase, ITelaOpcoes
 
         if (deveExibirCabecalho)
         {
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("Pressione ENTER para prosseguir.");
             Console.ReadLine();
         }
     }
@@ -83,18 +85,18 @@ public class TelaProduto : TelaBase, ITelaOpcoes
 
         Categoria categoria = (Categoria)repositorioCategoria.SelecionarPorId(idCategoria)!;
 
-        return new Produto(nome, categoria, unidade, preco);
+        return new Produtos(nome, categoria, unidade, preco);
     }
 
     protected override bool ExisteRegistroComInformacoesExclusivas(EntidadeBase entidade, int? idIgnorado = null)
     {
-        Produto novoProduto = (Produto)entidade;
+        Produtos novoProduto = (Produtos)entidade;
 
         EntidadeBase[] produtos = repositorioProduto.SelecionarTodos();
 
         foreach (EntidadeBase registro in produtos)
         {
-            Produto p = (Produto)registro;
+            Produtos p = (Produtos)registro;
 
             if (p == null)
                 continue;

@@ -16,7 +16,7 @@ public class TelaPrincipal
         repositorioCategoria = new RepositorioCategoria();
         repositorioCategoria.Cadastrar(categoriaTeste);
 
-        repositorioProduto = new RepositorioProduto();
+        repositorioProdutos = new RepositorioProduto();
     }
     public ITelaOpcoes? ObterOpcaoMenuPrincipal()
     {

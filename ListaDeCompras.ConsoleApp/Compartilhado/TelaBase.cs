@@ -50,7 +50,7 @@ public abstract class TelaBase
         Console.WriteLine("---------------------------------");
         Console.WriteLine($"O registro \"{novaEntidade.Id}\" foi cadastrado com sucesso!");
         Console.WriteLine("---------------------------------");
-        Console.WriteLine("Digite ENTER para continuar");
+        Console.WriteLine("Pressione ENTER para continuar");
         Console.ReadLine();
     }
     public void Editar()
@@ -83,7 +83,7 @@ public abstract class TelaBase
         Console.WriteLine("---------------------------------");
         Console.WriteLine($"O registro \"{entidadeAtualizada.Id}\" foi editado com sucesso!");
         Console.WriteLine("---------------------------------");
-        Console.WriteLine("Digite ENTER para continuar");
+        Console.WriteLine("Pressione ENTER para continuar");
         Console.ReadLine();
     }
     public void Excluir()

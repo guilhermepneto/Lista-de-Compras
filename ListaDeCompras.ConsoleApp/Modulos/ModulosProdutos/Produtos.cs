@@ -1,4 +1,5 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
+using ListaDeCompras.ConsoleApp.Modulos.ModulosCategoria;
 
 namespace ListaDeCompras.ConsoleApp.Modulos.ModulosProdutos;
 
@@ -19,7 +20,7 @@ public class Produtos : EntidadeBase
     public string UnidadeMedida { get; private set; }
     public decimal PrecoAproximado { get; private set; }
 
-    public Produto(
+    public Produtos(
             string nome,
             Categoria categoria,
             string unidadeMedida,
@@ -35,7 +36,7 @@ public class Produtos : EntidadeBase
 
     public override void Atualizar(EntidadeBase entidadeAtualizada)
     {
-        Produto produtoAtualizado = (Produto)entidadeAtualizada;
+        Produtos produtoAtualizado = (Produtos)entidadeAtualizada;
 
         Nome = produtoAtualizado.Nome;
         Categoria = produtoAtualizado.Categoria;
