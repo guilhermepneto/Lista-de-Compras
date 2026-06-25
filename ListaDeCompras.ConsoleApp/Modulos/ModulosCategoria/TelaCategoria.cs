@@ -1,14 +1,17 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
+using ListaDeCompras.ConsoleApp.Modulos.ModulosProdutos;
 
 namespace ListaDeCompras.ConsoleApp.Modulos.ModulosCategoria;
 
 public class TelaCategoria : TelaBase, ITelaOpcoes
 {
     private readonly RepositorioCategoria repositorioCategoria;
+    private readonly RepositorioProduto repositorioProduto;
 
-    public TelaCategoria(RepositorioCategoria repositorioCategoria) : base("Categoria", repositorioCategoria)
+    public TelaCategoria(RepositorioCategoria repositorioCategoria, RepositorioProduto repositorioProduto) : base("Categoria", repositorioCategoria)
     {
         this.repositorioCategoria = repositorioCategoria;
+        this.repositorioProduto = repositorioProduto;
     }
 
     public override void VisualizarTodos(bool deveExibirCabecalho)
@@ -120,6 +123,26 @@ public class TelaCategoria : TelaBase, ITelaOpcoes
 
     protected override bool ExistemDependenciasAtivasDoRegistro(int idRegistro)
     {
+        EntidadeBase[] produtos = repositorioProduto.SelecionarTodos();
+
+
+        for (int i = 0; i < produtos.Length; i++)
+        {
+            Produtos p = (Produtos)produtos[i];
+
+            if (p == null)
+                continue;
+
+            if (p.Categoria.Id == idRegistro)
+            {
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine($"Existe um ou mais produtos relacionados a essa catergoria");
+                Console.WriteLine("---------------------------------");
+
+
+                return true;
+            }
+        }
 
 
         return base.ExistemDependenciasAtivasDoRegistro(idRegistro);
