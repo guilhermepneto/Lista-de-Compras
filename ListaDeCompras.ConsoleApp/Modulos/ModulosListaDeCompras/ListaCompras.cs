@@ -46,7 +46,7 @@ public class ListaCompras : EntidadeBase
         }
     }
 
-    public void RemoverItem()
+    public void RemoverItem(int idItemLista)
     {
         for (int i = 0; i < Itens.Length; i++)
         {

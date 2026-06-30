@@ -1,5 +1,4 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
-using ListaDeCompras.ConsoleApp.Modulos;
 using ListaDeCompras.ConsoleApp.Modulos.ModulosCategoria;
 
 namespace ListaDeCompras.ConsoleApp.Modulos.ModulosProdutos;
@@ -56,36 +55,91 @@ public class TelaProduto : TelaBase, ITelaOpcoes
 
     protected override EntidadeBase ObterDadosCadastrais()
     {
-        Console.Write("Nome: ");
-        string nome = Console.ReadLine()!;
+        Console.Write("Informe o nome do produto: ");
+        string? nome = Console.ReadLine();
 
-        Console.Write("Unidade de medida: ");
-        string unidade = Console.ReadLine()!;
+        Console.WriteLine("---------------------------------");
 
-        Console.Write("Preço aproximado: ");
-        decimal preco = Convert.ToDecimal(Console.ReadLine());
+        VisualizarCategorias();
 
-        Console.WriteLine();
-        Console.WriteLine("Categorias:");
+        Console.WriteLine("---------------------------------");
 
-        EntidadeBase[] categorias = repositorioCategoria.SelecionarTodos();
-
-        foreach (EntidadeBase registro in categorias)
-        {
-            Categoria c = (Categoria)registro;
-
-            if (c == null)
-                continue;
-
-            Console.WriteLine($"{c.Id} - {c.Nome}");
-        }
-
-        Console.Write("Id da categoria: ");
+        Console.Write("Informe o ID da categoria do produto: ");
         int idCategoria = Convert.ToInt32(Console.ReadLine());
 
-        Categoria categoria = (Categoria)repositorioCategoria.SelecionarPorId(idCategoria)!;
+        Console.WriteLine("---------------------------------");
 
-        return new Produtos(nome, categoria, unidade, preco);
+        Categoria? categoriaSelecionada =
+            (Categoria?)repositorioCategoria.SelecionarPorId(idCategoria);
+
+        Console.Write("Informe o valor/quantidade da unidade de medida do produto: ");
+        int valorUnidadeMedida = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("---------------------------------");
+        Console.WriteLine("Selecione uma unidade de medida disponível para o produto");
+        Console.WriteLine("---------------------------------");
+        Console.WriteLine("1 - Unidade (Padrão)");
+        Console.WriteLine("2 - Caixa");
+        Console.WriteLine("3 - Duzia");
+        Console.WriteLine("4 - Kg");
+        Console.WriteLine("5 - L");
+        Console.WriteLine("6 - Ml");
+        Console.WriteLine("7 - G");
+        Console.WriteLine("---------------------------------");
+        Console.Write("Informe a unidade de medida escolhida: ");
+        string? unidadeSelecionada = Console.ReadLine();
+
+        UnidadeMedidaProduto unidadeMedida;
+
+        switch (unidadeSelecionada)
+        {
+            case "1":
+                unidadeMedida = UnidadeMedidaProduto.Unidade;
+                break;
+
+            case "2":
+                unidadeMedida = UnidadeMedidaProduto.Caixa;
+                break;
+
+            case "3":
+                unidadeMedida = UnidadeMedidaProduto.Duzia;
+                break;
+
+            case "4":
+                unidadeMedida = UnidadeMedidaProduto.Kg;
+                break;
+
+            case "5":
+                unidadeMedida = UnidadeMedidaProduto.L;
+                break;
+
+            case "6":
+                unidadeMedida = UnidadeMedidaProduto.Ml;
+                break;
+
+            case "7":
+                unidadeMedida = UnidadeMedidaProduto.G;
+                break;
+
+            default:
+                unidadeMedida = UnidadeMedidaProduto.Unidade;
+                break;
+        }
+
+        Console.Write("Informe o preço aproximado do produto: ");
+        decimal precoAproximado = Convert.ToDecimal(Console.ReadLine());
+
+        return new Produtos(
+            nome!,
+            categoriaSelecionada!,
+            valorUnidadeMedida,
+            unidadeMedida,
+            precoAproximado);
+    }
+
+    private void VisualizarCategorias()
+    {
+        throw new NotImplementedException();
     }
 
     protected override bool ExisteRegistroComInformacoesExclusivas(EntidadeBase entidade, int? idIgnorado = null)

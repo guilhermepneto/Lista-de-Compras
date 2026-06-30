@@ -26,7 +26,7 @@ public class ItemListaCompras
         }
     }
 
-    public ItemListaCompras(Produto produto, int quantidade)
+    public ItemListaCompras(Produtos produto, int quantidade)
     {
         Id = GeradorIdsItemListaCompras.GerarId();
         Produto = produto;

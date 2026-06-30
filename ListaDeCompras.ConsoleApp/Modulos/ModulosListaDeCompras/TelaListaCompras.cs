@@ -1,4 +1,5 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
+using ListaDeCompras.ConsoleApp.Modulos.ModulosItemListaCompras;
 using ListaDeCompras.ConsoleApp.Modulos.ModulosProdutos;
 
 namespace ListaDeCompras.ConsoleApp.Modulos.ModulosListaDeCompras;
@@ -8,7 +9,9 @@ public class TelaListaCompras : TelaBase, ITelaOpcoes
     private readonly RepositorioListaCompras repositorioListaCompras;
     private readonly RepositorioProduto repositorioProduto;
 
-    public TelaListaCompras(RepositorioListaCompras repositorioListaCompras, RepositorioProduto repositorioProduto) : base("Listas de compras", repositorioListaCompras)
+    public TelaListaCompras(
+        RepositorioListaCompras repositorioListaCompras,
+        RepositorioProduto repositorioProduto) : base("Listas de compras", repositorioListaCompras)
     {
         this.repositorioListaCompras = repositorioListaCompras;
         this.repositorioProduto = repositorioProduto;
@@ -99,7 +102,7 @@ public class TelaListaCompras : TelaBase, ITelaOpcoes
         int idProdutoSelecionado = Convert.ToInt32(Console.ReadLine());
 
         Produtos? produtoSelecionado =
-            (Produto?)repositorioProduto.SelecionarPorId(idProdutoSelecionado);
+            (Produtos?)repositorioProduto.SelecionarPorId(idProdutoSelecionado);
 
         Console.WriteLine("Informe a quantidade do produto: ");
         int quantidadeProduto = Convert.ToInt32(Console.ReadLine());
@@ -216,7 +219,7 @@ public class TelaListaCompras : TelaBase, ITelaOpcoes
 
         for (int i = 0; i < registros.Length; i++)
         {
-            Produto p = (Produto)registros[i];
+            Produtos p = (Produtos)registros[i];
 
             if (p == null)
                 continue;
