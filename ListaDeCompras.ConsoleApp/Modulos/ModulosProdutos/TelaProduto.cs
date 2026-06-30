@@ -3,7 +3,7 @@ using ListaDeCompras.ConsoleApp.Modulos.ModulosCategoria;
 
 namespace ListaDeCompras.ConsoleApp.Modulos.ModulosProdutos;
 
-public class TelaProduto : TelaBase, ITelaOpcoes
+public class TelaProduto : TelaBase<Produtos>, ITelaOpcoes, ITelaCrud
 {
     private readonly RepositorioProduto repositorioProduto;
     private readonly RepositorioCategoria repositorioCategoria;
@@ -53,7 +53,7 @@ public class TelaProduto : TelaBase, ITelaOpcoes
         }
     }
 
-    protected override EntidadeBase ObterDadosCadastrais()
+    protected override Produtos ObterDadosCadastrais()
     {
         Console.Write("Informe o nome do produto: ");
         string? nome = Console.ReadLine();
@@ -69,8 +69,7 @@ public class TelaProduto : TelaBase, ITelaOpcoes
 
         Console.WriteLine("---------------------------------");
 
-        Categoria? categoriaSelecionada =
-            (Categoria?)repositorioCategoria.SelecionarPorId(idCategoria);
+        Categoria? categoriaSelecionada = repositorioCategoria.SelecionarPorId(idCategoria);
 
         Console.Write("Informe o valor/quantidade da unidade de medida do produto: ");
         int valorUnidadeMedida = Convert.ToInt32(Console.ReadLine());
@@ -139,26 +138,42 @@ public class TelaProduto : TelaBase, ITelaOpcoes
 
     private void VisualizarCategorias()
     {
-        throw new NotImplementedException();
+        Console.WriteLine(
+           "{0, -7} | {1, -20} | {2, -10}",
+           "Id", "Nome", "Cor"
+       );
+
+        EntidadeBase[] registros = repositorioCategoria.SelecionarTodos();
+
+        for (int i = 0; i < registros.Length; i++)
+        {
+            Categoria c = (Categoria)registros[i];
+
+            if (c == null)
+                continue;
+
+            Console.WriteLine(
+                "{0, -7} | {1, -20} | {2, -10}",
+                c.Id, c.Nome, c.Cor
+            );
+        }
     }
 
-    protected override bool ExisteRegistroComInformacoesExclusivas(EntidadeBase entidade, int? idIgnorado = null)
+    protected override bool ExisteRegistroComInformacoesExclusivas(Produtos entidade, int? idIgnorado = null)
     {
-        Produtos novoProduto = (Produtos)entidade;
+        Produtos[] produtos = repositorioProduto.SelecionarTodos();
 
-        EntidadeBase[] produtos = repositorioProduto.SelecionarTodos();
-
-        foreach (EntidadeBase registro in produtos)
+        foreach (Produtos registro in produtos)
         {
-            Produtos p = (Produtos)registro;
+            Produtos p = registro;
 
             if (p == null)
                 continue;
 
             if (
                 p.Id != idIgnorado &&
-                p.Nome == novoProduto.Nome &&
-                p.Categoria.Id == novoProduto.Categoria.Id)
+                p.Nome == entidade.Nome &&
+                p.Categoria.Id == entidade.Categoria.Id)
             {
                 Console.WriteLine("Já existe um produto com esse nome nesta categoria.");
 

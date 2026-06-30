@@ -4,7 +4,7 @@ using ListaDeCompras.ConsoleApp.Modulos.ModulosProdutos;
 
 namespace ListaDeCompras.ConsoleApp.Modulos.ModulosListaDeCompras;
 
-public class TelaListaCompras : TelaBase, ITelaOpcoes
+public class TelaListaCompras : TelaBase<ListaCompras>, ITelaOpcoes, ITelaCrud
 {
     private readonly RepositorioListaCompras repositorioListaCompras;
     private readonly RepositorioProduto repositorioProduto;
@@ -87,8 +87,7 @@ public class TelaListaCompras : TelaBase, ITelaOpcoes
         Console.WriteLine("Informe o ID da lista que deseja editar: ");
         int idListaSelecionada = Convert.ToInt32(Console.ReadLine());
 
-        ListaCompras? listaSelecionada =
-            (ListaCompras?)repositorioListaCompras.SelecionarPorId(idListaSelecionada);
+        ListaCompras? listaSelecionada = repositorioListaCompras.SelecionarPorId(idListaSelecionada);
 
         Console.WriteLine("---------------------------------");
         Console.WriteLine($"Gestão da Lista de Compras \"{listaSelecionada.Nome}\"");
@@ -101,8 +100,7 @@ public class TelaListaCompras : TelaBase, ITelaOpcoes
         Console.WriteLine("Informe o ID do produto que deseja adicionar: ");
         int idProdutoSelecionado = Convert.ToInt32(Console.ReadLine());
 
-        Produtos? produtoSelecionado =
-            (Produtos?)repositorioProduto.SelecionarPorId(idProdutoSelecionado);
+        Produtos? produtoSelecionado = repositorioProduto.SelecionarPorId(idProdutoSelecionado);
 
         Console.WriteLine("Informe a quantidade do produto: ");
         int quantidadeProduto = Convert.ToInt32(Console.ReadLine());
@@ -164,8 +162,7 @@ public class TelaListaCompras : TelaBase, ITelaOpcoes
         Console.WriteLine("Informe o ID da lista que deseja visualizar: ");
         int idListaSelecionada = Convert.ToInt32(Console.ReadLine());
 
-        ListaCompras? listaSelecionada =
-            (ListaCompras?)repositorioListaCompras.SelecionarPorId(idListaSelecionada);
+        ListaCompras? listaSelecionada = repositorioListaCompras.SelecionarPorId(idListaSelecionada);
 
         Console.WriteLine("---------------------------------");
         Console.WriteLine($"Gestão da Lista de Compras \"{listaSelecionada.Nome}\"");
@@ -201,7 +198,7 @@ public class TelaListaCompras : TelaBase, ITelaOpcoes
         return listaSelecionada;
     }
 
-    protected override EntidadeBase ObterDadosCadastrais()
+    protected override ListaCompras ObterDadosCadastrais()
     {
         Console.Write("Informe o nome da lista de compras: ");
         string? nome = Console.ReadLine();
@@ -215,11 +212,11 @@ public class TelaListaCompras : TelaBase, ITelaOpcoes
             "Id", "Nome", "Categoria", "Unidade", "Preço Aproximado"
         );
 
-        EntidadeBase[] registros = repositorioProduto.SelecionarTodos();
+        Produtos[] produtos = repositorioProduto.SelecionarTodos();
 
-        for (int i = 0; i < registros.Length; i++)
+        for (int i = 0; i < produtos.Length; i++)
         {
-            Produtos p = (Produtos)registros[i];
+            Produtos p = produtos[i];
 
             if (p == null)
                 continue;

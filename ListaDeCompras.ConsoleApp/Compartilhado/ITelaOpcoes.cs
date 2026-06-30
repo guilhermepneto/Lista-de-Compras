@@ -1,8 +1,6 @@
-using System;
-
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
-public class TelaOpcoes
+public interface TelaOpcoes
 {
-
+    string? ObterOpcaoMenu();
 }
