@@ -30,15 +30,10 @@ public class TelaProduto : TelaBase<Produtos>, ITelaOpcoes, ITelaCrud
             "Id", "Nome", "Categoria", "Unidade", "Preço"
             );
 
-        EntidadeBase[] registros = repositorioProduto.SelecionarTodos();
+        List<Produtos> produtos = repositorioProduto.SelecionarTodos();
 
-        foreach (EntidadeBase registro in registros)
+        foreach (Produtos p in produtos)
         {
-            Produtos p = (Produtos)registro;
-
-            if (p == null)
-                continue;
-
             Console.WriteLine(
                 "{0,-5} | {1,-20} | {2,-20} | {3,-10} | {4,-10}",
                 p.Id, p.Nome, p.Categoria.Nome, p.UnidadeMedida, p.PrecoAproximado
@@ -143,15 +138,10 @@ public class TelaProduto : TelaBase<Produtos>, ITelaOpcoes, ITelaCrud
            "Id", "Nome", "Cor"
        );
 
-        EntidadeBase[] registros = repositorioCategoria.SelecionarTodos();
+        List<Categoria> categorias = repositorioCategoria.SelecionarTodos();
 
-        for (int i = 0; i < registros.Length; i++)
+        foreach (Categoria c in categorias)
         {
-            Categoria c = (Categoria)registros[i];
-
-            if (c == null)
-                continue;
-
             Console.WriteLine(
                 "{0, -7} | {1, -20} | {2, -10}",
                 c.Id, c.Nome, c.Cor
@@ -161,7 +151,7 @@ public class TelaProduto : TelaBase<Produtos>, ITelaOpcoes, ITelaCrud
 
     protected override bool ExisteRegistroComInformacoesExclusivas(Produtos entidade, int? idIgnorado = null)
     {
-        Produtos[] produtos = repositorioProduto.SelecionarTodos();
+        List<Produtos> produtos = repositorioProduto.SelecionarTodos();
 
         foreach (Produtos registro in produtos)
         {

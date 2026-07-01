@@ -4,6 +4,7 @@ using ListaDeCompras.ConsoleApp.Modulos.ModulosListaDeCompras;
 
 TelaPrincipal telaPrincipal = new TelaPrincipal();
 
+
 while (true)
 {
     ITelaOpcoes? telaSelecionada = telaPrincipal.ObterOpcaoMenuPrincipal();
