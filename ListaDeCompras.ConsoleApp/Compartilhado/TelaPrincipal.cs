@@ -13,17 +13,10 @@ public class TelaPrincipal
 
     public TelaPrincipal()
     {
-        Categoria categoriaTeste = new Categoria("Produtos de Limpeza", CorCategoria.Vermelho);
-
         repositorioCategoria = new RepositorioCategoria();
-        repositorioCategoria.Cadastrar(categoriaTeste);
-
         repositorioProdutos = new RepositorioProduto();
-
-        ListaCompras listaTeste = new ListaCompras("Compras do Mês");
-
         repositorioListaCompras = new RepositorioListaCompras();
-        repositorioListaCompras.Cadastrar(listaTeste);
+
     }
     public ITelaOpcoes? ObterOpcaoMenuPrincipal()
     {
@@ -47,7 +40,7 @@ public class TelaPrincipal
             return new TelaProduto(repositorioProdutos, repositorioCategoria);
 
         if (opcaoMenuPrincipal == "3")
-            return null;
+            return new TelaListaCompras(repositorioListaCompras, repositorioProdutos);
 
         return null;
     }
