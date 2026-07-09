@@ -1,8 +1,34 @@
-﻿using ListaDeCompras.ConsoleApp.Compartilhado;
+﻿using System.Text.Json;
+using ListaDeCompras.ConsoleApp.Compartilhado;
+using ListaDeCompras.ConsoleApp.Compartilhado.Arquivos;
 using ListaDeCompras.ConsoleApp.Modulos.ModulosListaDeCompras;
 
-TelaPrincipal telaPrincipal = new TelaPrincipal();
+ContextoJson contexto = new ContextoJson();
 
+try
+{
+    contexto.Carregar();
+}
+catch (JsonException)
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine("O formato do arquivo de armazenamento está corrompido.");
+    Console.WriteLine("Prosseguir com alterações pode causar a sobrescrita dos dados.");
+    Console.ResetColor();
+    Console.ReadLine();
+}
+catch
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("Ocorreu um erro inesperado. O programa irá encerrar em 3 segundos...");
+    Console.ResetColor();
+
+    Thread.Sleep(TimeSpan.FromSeconds(3));
+
+    return;
+}
+
+TelaPrincipal telaPrincipal = new TelaPrincipal(contexto);
 
 while (true)
 {

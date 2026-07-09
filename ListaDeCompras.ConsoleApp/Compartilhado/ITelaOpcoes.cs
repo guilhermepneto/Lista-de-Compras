@@ -1,6 +1,6 @@
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
-public interface TelaOpcoes
+public interface ITelaOpcoes
 {
     string? ObterOpcaoMenu();
 }

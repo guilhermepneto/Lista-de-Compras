@@ -1,8 +1,19 @@
+using ListaDeCompras.ConsoleApp.Compartilhado.Arquivos;
+
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
 public abstract class RepositorioBase<TEntidade> where TEntidade : EntidadeBase
 {
-    private readonly List<TEntidade> registros = new List<TEntidade>();
+    protected readonly ContextoJson contexto;
+    protected readonly List<TEntidade> registros;
+
+    protected RepositorioBase(ContextoJson contexto)
+    {
+        this.contexto = contexto;
+        registros = ObterRegistros();
+    }
+
+    protected abstract List<TEntidade> ObterRegistros();
 
     public void Cadastrar(TEntidade novoRegistro)
     {
